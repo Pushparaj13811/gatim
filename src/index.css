@@ -1,0 +1,474 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Theme - Base Colors */
+    --background: 210 40% 98%; /* Soft sky blue background */
+    --foreground: 222 47% 11%; /* Dark text for readability */
+
+    /* Primary Colors - Sky Blue Palette */
+    --primary: 210 100% 50%; /* Vibrant sky blue */
+    --primary-foreground: 210 40% 98%;
+
+    /* Secondary Colors - Slate with Blue Undertones */
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Accent Colors - Complementary to Sky Blue */
+    --accent: 262 83% 58%; /* Soft purple */
+    --accent-foreground: 210 40% 98%;
+
+    /* Muted Colors */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    /* Card and Popover */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Border and Input */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 210 100% 50%;
+
+    /* Status Colors */
+    --success: 142 72% 29%; /* Deep green */
+    --success-foreground: 210 40% 98%;
+    --warning: 38 92% 50%; /* Warm amber */
+    --warning-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%; /* Bright red */
+    --destructive-foreground: 210 40% 98%;
+
+    /* Radius */
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Dark Theme - Base Colors */
+    --background: 222 47% 11%; /* Deep charcoal background */
+    --foreground: 210 40% 98%; /* Light text for readability */
+
+    /* Primary Colors - Muted Sky Blue */
+    --primary: 210 100% 50%; /* Vibrant sky blue */
+    --primary-foreground: 222 47% 11%;
+
+    /* Secondary Colors */
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Accent Colors */
+    --accent: 262 83% 58%; /* Soft purple */
+    --accent-foreground: 210 40% 98%;
+
+    /* Muted Colors */
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    /* Card and Popover */
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Border and Input */
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 210 100% 50%;
+
+    /* Status Colors */
+    --success: 142 72% 29%; /* Deep green */
+    --success-foreground: 210 40% 98%;
+    --warning: 38 92% 50%; /* Warm amber */
+    --warning-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%; /* Bright red */
+    --destructive-foreground: 210 40% 98%;
+  }
+
+  /* Solarized Theme */
+  .solarized {
+    --background: 43 87% 91%; /* Soft beige */
+    --foreground: 210 32% 15%; /* Deep brown text */
+
+    /* Primary Colors - Warm Yellow */
+    --primary: 48 100% 50%; /* Vibrant sunflower yellow */
+    --primary-foreground: 43 87% 91%;
+
+    /* Secondary Colors - Forest Green */
+    --secondary: 120 61% 25%;
+    --secondary-foreground: 43 87% 91%;
+
+    /* Accent Colors - Soft Teal */
+    --accent: 174 67% 45%; /* Ocean teal */
+    --accent-foreground: 43 87% 91%;
+
+    /* Muted Colors */
+    --muted: 48 100% 95%; /* Pale yellow */
+    --muted-foreground: 210 32% 15%;
+
+    /* Card and Popover */
+    --card: 48 100% 96%; /* Pale cream */
+    --card-foreground: 210 32% 15%;
+    --popover: 48 100% 96%;
+    --popover-foreground: 210 32% 15%;
+
+    /* Border and Input */
+    --border: 48 40% 85%;
+    --input: 48 40% 85%;
+    --ring: 48 100% 50%;
+
+    /* Status Colors */
+    --success: 146 61% 35%; /* Deep green */
+    --success-foreground: 43 87% 91%;
+    --warning: 38 92% 55%; /* Golden orange */
+    --warning-foreground: 43 87% 91%;
+    --destructive: 0 84% 60%; /* Bright red */
+    --destructive-foreground: 43 87% 91%;
+
+    --radius: 0.5rem;
+  }
+
+  /* Neon Glow Theme */
+  .neon {
+    --background: 255 10% 8%; /* Midnight black */
+    --foreground: 210 60% 98%; /* Neon white */
+
+    /* Primary Colors - Neon Blue */
+    --primary: 220 90% 56%; /* Electric blue */
+    --primary-foreground: 255 10% 8%;
+
+    /* Secondary Colors - Neon Pink */
+    --secondary: 330 85% 56%;
+    --secondary-foreground: 255 10% 8%;
+
+    /* Accent Colors - Neon Green */
+    --accent: 140 80% 50%; /* Lime green */
+    --accent-foreground: 255 10% 8%;
+
+    /* Muted Colors */
+    --muted: 220 10% 20%; /* Deep gray */
+    --muted-foreground: 210 60% 98%;
+
+    /* Card and Popover */
+    --card: 220 10% 15%; /* Dark gray */
+    --card-foreground: 210 60% 98%;
+    --popover: 220 10% 15%;
+    --popover-foreground: 210 60% 98%;
+
+    /* Border and Input */
+    --border: 220 10% 30%; /* Neon border */
+    --input: 220 10% 30%;
+    --ring: 220 90% 56%; /* Neon blue */
+
+    /* Status Colors */
+    --success: 140 80% 50%; /* Neon green */
+    --success-foreground: 255 10% 8%;
+    --warning: 45 90% 50%; /* Bright amber */
+    --warning-foreground: 255 10% 8%;
+    --destructive: 0 85% 60%; /* Bright red */
+    --destructive-foreground: 255 10% 8%;
+
+    --radius: 1rem;
+  }
+  /* Light Bliss Theme */
+  .light-bliss {
+    --background: 230 80% 98%; /* Soft pastel blue */
+    --foreground: 230 25% 18%; /* Dark gray for high contrast text */
+
+    --primary: 210 100% 65%; /* Aqua blue */
+    --primary-foreground: 230 80% 98%;
+
+    --secondary: 170 55% 60%; /* Soft mint green */
+    --secondary-foreground: 230 25% 18%;
+
+    --accent: 310 75% 70%; /* Lavender purple */
+    --accent-foreground: 230 80% 98%;
+
+    --muted: 230 50% 95%; /* Soft gray-blue */
+    --muted-foreground: 230 25% 18%;
+
+    --card: 230 50% 98%; /* Almost white */
+    --card-foreground: 230 25% 18%;
+
+    --border: 210 25% 85%;
+    --ring: 210 100% 65%;
+
+    --radius: 0.75rem;
+
+    /* Popover */
+    --popover: 230 80% 95%; /* Soft pastel background */
+    --popover-foreground: 230 25% 18%; /* Dark text for readability */
+
+    /* Status Colors */
+    --success: 142 72% 29%; /* Deep green */
+    --success-foreground: 230 80% 98%;
+    --warning: 38 92% 50%; /* Warm amber */
+    --warning-foreground: 230 80% 98%;
+    --destructive: 0 84% 60%; /* Bright red */
+    --destructive-foreground: 230 80% 98%;
+
+    /* Button Colors */
+    --button-primary: 210 100% 65%; /* Aqua blue */
+    --button-primary-foreground: 230 80% 98%;
+    --button-secondary: 170 55% 60%; /* Soft mint green */
+    --button-secondary-foreground: 230 80% 98%;
+  }
+
+  /* Retro Warm Theme */
+  .retro-warm {
+    --background: 33 50% 92%; /* Pale cream */
+    --foreground: 20 30% 20%; /* Deep brown */
+
+    --primary: 25 90% 55%; /* Warm orange */
+    --primary-foreground: 33 50% 92%;
+
+    --secondary: 48 80% 55%; /* Sunflower yellow */
+    --secondary-foreground: 33 50% 92%;
+
+    --accent: 340 65% 60%; /* Soft coral red */
+    --accent-foreground: 33 50% 92%;
+
+    --muted: 33 40% 85%; /* Light beige */
+    --muted-foreground: 20 30% 20%;
+
+    --card: 33 40% 90%; /* Cream */
+    --card-foreground: 20 30% 20%;
+
+    --border: 33 40% 80%;
+    --ring: 25 90% 55%;
+
+    --radius: 0.5rem;
+
+    /* Popover */
+    --popover: 33 40% 95%; /* Warm beige */
+    --popover-foreground: 20 30% 20%; /* Deep brown for text */
+
+    /* Status Colors */
+    --success: 142 72% 29%; /* Deep green */
+    --success-foreground: 33 50% 92%;
+    --warning: 38 92% 50%; /* Warm amber */
+    --warning-foreground: 33 50% 92%;
+    --destructive: 0 84% 60%; /* Bright red */
+    --destructive-foreground: 33 50% 92%;
+
+    /* Button Colors */
+    --button-primary: 25 90% 55%; /* Warm orange */
+    --button-primary-foreground: 33 50% 92%;
+    --button-secondary: 48 80% 55%; /* Sunflower yellow */
+    --button-secondary-foreground: 33 50% 92%;
+  }
+  /* Pastel Dream Theme */
+  .pastel-dream {
+    --background: 180 50% 95%; /* Soft pastel turquoise */
+    --foreground: 210 30% 15%; /* Dark gray for contrast text */
+
+    --primary: 190 100% 70%; /* Pastel blue */
+    --primary-foreground: 180 50% 95%;
+
+    --secondary: 120 55% 50%; /* Soft pastel green */
+    --secondary-foreground: 180 50% 95%;
+
+    --accent: 60 100% 75%; /* Soft pastel yellow */
+    --accent-foreground: 180 50% 95%;
+
+    --muted: 180 50% 90%; /* Light pastel blue */
+    --muted-foreground: 210 30% 15%;
+
+    --card: 180 50% 95%; /* Light pastel turquoise */
+    --card-foreground: 210 30% 15%;
+
+    --border: 180 40% 80%;
+    --ring: 190 100% 70%;
+
+    --radius: 0.5rem;
+
+    /* Popover */
+    --popover: 180 50% 95%; /* Soft pastel background */
+    --popover-foreground: 210 30% 15%; /* Dark text for readability */
+
+    /* Status Colors */
+    --success: 120 50% 40%; /* Soft green */
+    --success-foreground: 180 50% 95%;
+    --warning: 40 100% 50%; /* Soft yellow */
+    --warning-foreground: 180 50% 95%;
+    --destructive: 0 100% 60%; /* Bright red */
+    --destructive-foreground: 180 50% 95%;
+
+    /* Button Colors */
+    --button-primary: 190 100% 70%; /* Pastel blue */
+    --button-primary-foreground: 180 50% 95%;
+    --button-secondary: 120 55% 50%; /* Soft pastel green */
+    --button-secondary-foreground: 180 50% 95%;
+  }
+  /* Dark Cosmos Theme */
+  .dark-cosmos {
+    --background: 270 40% 10%; /* Deep cosmic purple */
+    --foreground: 210 50% 98%; /* Light lavender text for readability */
+
+    --primary: 280 100% 65%; /* Cosmic pink */
+    --primary-foreground: 270 40% 10%;
+
+    --secondary: 240 80% 50%; /* Nebula blue */
+    --secondary-foreground: 270 40% 10%;
+
+    --accent: 320 90% 60%; /* Stellar orange */
+    --accent-foreground: 270 40% 10%;
+
+    --muted: 270 30% 20%; /* Dark purple */
+    --muted-foreground: 210 50% 98%;
+
+    --card: 270 40% 15%; /* Deep cosmic purple */
+    --card-foreground: 210 50% 98%;
+
+    --border: 270 40% 20%;
+    --ring: 280 90% 65%;
+
+    --radius: 0.75rem;
+
+    /* Popover */
+    --popover: 270 40% 15%; /* Dark cosmic background */
+    --popover-foreground: 210 50% 98%; /* Light lavender text for popover */
+
+    /* Status Colors */
+    --success: 142 72% 29%; /* Deep green */
+    --success-foreground: 210 50% 98%;
+    --warning: 38 92% 50%; /* Warm amber */
+    --warning-foreground: 210 50% 98%;
+    --destructive: 0 100% 60%; /* Bright red */
+    --destructive-foreground: 210 50% 98%;
+
+    /* Button Colors */
+    --button-primary: 280 100% 65%; /* Cosmic pink */
+    --button-primary-foreground: 270 40% 10%;
+    --button-secondary: 240 80% 50%; /* Nebula blue */
+    --button-secondary-foreground: 270 40% 10%;
+  }
+
+  .gradient-luxe {
+    --background: 230 40% 15%; /* Deep indigo */
+    --foreground: 230 90% 95%; /* Light silver */
+
+    --primary: 280 90% 70%; /* Royal purple */
+    --primary-foreground: 230 40% 15%;
+
+    --secondary: 220 80% 60%; /* Sapphire blue */
+    --secondary-foreground: 230 90% 95%;
+
+    --accent: 50 90% 55%; /* Gold */
+    --accent-foreground: 230 40% 15%;
+
+    --muted: 230 20% 20%; /* Dark gray */
+    --muted-foreground: 230 90% 95%;
+
+    --card: 230 30% 25%; /* Soft indigo */
+    --card-foreground: 230 90% 95%;
+
+    --border: 230 30% 35%;
+    --ring: 280 90% 70%;
+
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom Gradient Backgrounds */
+.bg-gradient-primary {
+  @apply bg-gradient-to-br from-primary/90 via-primary to-primary/90;
+}
+
+.bg-gradient-subtle {
+  @apply bg-gradient-to-br from-background via-muted to-background;
+}
+
+.bg-gradient-card {
+  @apply bg-gradient-to-br from-card via-background to-card;
+}
+
+.bg-gradient-solarized {
+  @apply bg-gradient-to-br from-primary/80 via-accent to-secondary/80;
+}
+
+.bg-gradient-neon {
+  @apply bg-gradient-to-br from-primary/90 via-secondary/90 to-accent/90;
+}
+
+/* Custom Button Styles */
+.btn-gradient {
+  @apply bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground transition-all duration-300;
+}
+
+.btn-subtle {
+  @apply bg-gradient-to-r from-muted to-muted/80 hover:from-muted/90 hover:to-muted/70 text-muted-foreground transition-all duration-300;
+}
+
+.btn-solarized {
+  @apply bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground transition-all duration-300;
+}
+
+.btn-neon {
+  @apply bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground transition-all duration-300;
+}
+
+/* Card Styles */
+.card-hover {
+  @apply hover:shadow-lg transition-all duration-300 hover:scale-[1.02];
+}
+
+/* Input Styles */
+.input-focus {
+  @apply focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300;
+}
+
+/* Typography */
+.heading-1 {
+  @apply text-4xl font-bold tracking-tight;
+}
+
+.heading-2 {
+  @apply text-3xl font-semibold tracking-tight;
+}
+
+.heading-3 {
+  @apply text-2xl font-semibold tracking-tight;
+}
+
+.body-large {
+  @apply text-lg leading-7;
+}
+
+.body-base {
+  @apply text-base leading-6;
+}
+
+.body-small {
+  @apply text-sm leading-5;
+}
+
+/* Animation Utilities */
+.animate-fade {
+  @apply transition-opacity duration-300;
+}
+
+.animate-scale {
+  @apply transition-transform duration-300;
+}
+
+.animate-slide {
+  @apply transition-all duration-300;
+}
+
+.ProseMirror:focus {
+  outline: none !important;
+}
