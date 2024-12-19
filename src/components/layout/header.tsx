@@ -12,7 +12,7 @@ export function Header() {
   const { theme, setTheme } = useTheme();
   const user = useSelector((state: RootState) => state.auth.user);
 
-  const themes = ['light', 'dark', 'neon', 'solarized', 'light-bliss', 'retro-warm', 'dark-cosmos', 'pastel-dream', 'gradient-luxe'];
+  const themes = ['neon','light-bliss', 'retro-warm', 'gradient-luxe'];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
