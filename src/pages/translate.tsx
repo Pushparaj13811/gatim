@@ -15,6 +15,7 @@ import { translateContent } from '@/services/translationService';
 import { getLanguageCode, getLanguageName } from '@/lib/language';
 import { useCallback } from 'react';
 import { ApiError } from '@/lib/errors';
+import { htmlToMarkdown } from '@/utils/markdownConverter';
 
 export function TranslatePage() {
   const dispatch = useDispatch();
@@ -55,10 +56,16 @@ export function TranslatePage() {
     dispatch(setIsTranslating(true));
 
     try {
+
+      const markdownContent = htmlToMarkdown(originalContent)
+      if (!markdownContent) {
+        throw new Error('Markdown content is missing from the translation request.');
+      }
+
       const response = await translateContent({
         from_lang: from_lang,
         to_lang: to_lang,
-        content: originalContent,
+        content: markdownContent,
       });
       if (response.translatedContent) {
         dispatch(setTranslatedContent(response.translatedContent));
