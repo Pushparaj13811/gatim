@@ -3,25 +3,22 @@ import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
 import TextStyle from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
-import Link from "@tiptap/extension-link";
-import Image from "@tiptap/extension-image";
 import { Button } from "@/components/ui/button";
 import {
   Bold,
   Italic,
   List,
   ListOrdered,
-  Undo,
-  Redo,
   AlignLeft,
   AlignCenter,
+  ArrowBigDownIcon,
   AlignRight,
   Strikethrough,
   Underline as UnderlineIcon,
-  Link as LinkIcon,
-  Image as ImageIcon,
 } from "lucide-react";
 import { useRef, useEffect } from "react";
+import PizZip from 'pizzip';
+import Docxtemplater from 'docxtemplater';
 
 interface EditorProps {
   content: string;
@@ -31,14 +28,16 @@ interface EditorProps {
 export function Editor({ content, onChange }: EditorProps) {
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        heading: {
+          levels: [1, 2, 3],
+        },
+      }),
       Underline,
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
       TextStyle,
-      Link,
-      Image,
     ],
     content,
     onUpdate: ({ editor }) => {
@@ -47,6 +46,13 @@ export function Editor({ content, onChange }: EditorProps) {
   });
 
   const editorRef = useRef<HTMLDivElement | null>(null);
+
+  // Update editor content when the `content` prop changes
+  useEffect(() => {
+    if (editor && content !== editor.getHTML()) {
+      editor.commands.setContent(content);
+    }
+  }, [content, editor]);
 
   useEffect(() => {
     const handleFocus = () => {
@@ -62,7 +68,6 @@ export function Editor({ content, onChange }: EditorProps) {
       editorElement.addEventListener("focus", handleFocus);
       editorElement.addEventListener("blur", handleBlur);
 
-      // Ensure clicking inside always focuses
       if (editorRef.current) {
         editorRef.current.addEventListener("click", () => editor?.chain().focus().run());
       }
@@ -74,16 +79,45 @@ export function Editor({ content, onChange }: EditorProps) {
         editorElement.removeEventListener("blur", handleBlur);
       }
       if (editorRef.current) {
-        editorRef.current.removeEventListener("click", () => editor?.chain().focus().run());
+        const currentEditor = editorRef.current;
+        currentEditor.removeEventListener("click", () => editor?.chain().focus().run());
       }
     };
   }, [editor]);
+
+
+  const handleDownload = async () => {
+    if (!editor) return;
+
+    const htmlContent = editor.getHTML();
+    if (!htmlContent) return;
+    try {
+      const zip = new PizZip();
+      zip.file('word/document.xml', htmlContent);
+
+      const doc = new Docxtemplater();
+      doc.loadZip(zip);
+
+      const generatedDocx = doc.getZip().generate({ type: 'blob' });
+
+      const url = URL.createObjectURL(generatedDocx);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'document.docx';
+      link.click();
+
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error generating .docx file:", error);
+    }
+  };
 
   if (!editor) return null;
 
   return (
     <div ref={editorRef} className="border rounded-lg overflow-hidden">
       <div className="border-b p-2 flex flex-wrap gap-2 bg-muted/30">
+        {/* Text Formatting Buttons */}
         <div className="flex gap-1">
           <Button
             variant="ghost"
@@ -118,6 +152,8 @@ export function Editor({ content, onChange }: EditorProps) {
             <UnderlineIcon className="h-4 w-4" />
           </Button>
         </div>
+
+        {/* List Formatting Buttons */}
         <div className="flex gap-1">
           <Button
             variant="ghost"
@@ -136,6 +172,8 @@ export function Editor({ content, onChange }: EditorProps) {
             <ListOrdered className="h-4 w-4" />
           </Button>
         </div>
+
+        {/* Alignment Buttons */}
         <div className="flex gap-1">
           <Button
             variant="ghost"
@@ -149,7 +187,7 @@ export function Editor({ content, onChange }: EditorProps) {
             variant="ghost"
             size="sm"
             onClick={() => editor.chain().focus().setTextAlign("center").run()}
-            className={editor.isActive({ textAlign: "center" }) ? "bg-accent" : ""}
+            className={editor.isActive("textAlign", { textAlign: "center" }) ? "bg-accent" : ""}
           >
             <AlignCenter className="h-4 w-4" />
           </Button>
@@ -157,66 +195,21 @@ export function Editor({ content, onChange }: EditorProps) {
             variant="ghost"
             size="sm"
             onClick={() => editor.chain().focus().setTextAlign("right").run()}
-            className={editor.isActive({ textAlign: "right" }) ? "bg-accent" : ""}
+            className={editor.isActive("textAlign", { textAlign: "right" }) ? "bg-accent" : ""}
           >
             <AlignRight className="h-4 w-4" />
           </Button>
         </div>
-        <div className="flex gap-1">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => editor.chain().focus().setTextAlign("justify").run()}
-            className={editor.isActive("textAlign", { textAlign: "justify" }) ? "bg-accent" : ""}
-          >
-            <AlignRight className="h-4 w-4" />
-          </Button>
-        </div>
-        <div className="flex gap-1 ml-auto">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => editor.chain().focus().undo().run()}
-            disabled={!editor.can().undo()}
-          >
-            <Undo className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => editor.chain().focus().redo().run()}
-            disabled={!editor.can().redo()}
-          >
-            <Redo className="h-4 w-4" />
-          </Button>
-        </div>
-        <div className="flex gap-1 ml-auto">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              const url = prompt("Enter the URL");
-              if (url) {
-                editor.chain().focus().setLink({ href: url }).run();
-              }
-            }}
-          >
-            <LinkIcon className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              const url = prompt("Enter the image URL");
-              if (url) {
-                editor.chain().focus().setImage({ src: url }).run();
-              }
-            }}
-          >
-            <ImageIcon className="h-4 w-4" />
+
+        {/* Download Button */}
+        <div className="ml-auto">
+          <Button variant="ghost" onClick={handleDownload}>
+            <ArrowBigDownIcon className="h-5 w-5" />
           </Button>
         </div>
       </div>
+
+      {/* Editor Content */}
       <div className="overflow-y-auto max-h-[500px] prose prose-sm dark:prose-invert max-w-none">
         <EditorContent
           editor={editor}
