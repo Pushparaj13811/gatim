@@ -1,31 +1,91 @@
+import { useEffect } from 'react';
+import LanguageDetect from 'languagedetect';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Editor } from '@/components/translation/editor';
 import { FileUpload } from '@/components/translation/file-upload';
 import { DocumentPreview } from '@/components/translation/DocumentPreview';
-import { setTranslatedContent, setIsTranslating } from '@/features/editor/editorSlice';
-import type { RootState } from '@/lib/store';
+import {
+  setTranslatedContent,
+  setIsTranslating,
+  setFromLang
+} from '@/features/editor/editorSlice';
+import { RootState } from '@/lib/store';
+import { translateContent } from '@/services/translationService';
+import { getLanguageCode, getLanguageName } from '@/lib/language';
+import { useCallback } from 'react';
+import { ApiError } from '@/lib/errors';
+import { htmlToMarkdown } from '@/utils/markdownConverter';
 
 export function TranslatePage() {
   const dispatch = useDispatch();
-  const { translatedContent, isTranslating } = useSelector(
-    (state: RootState) => state.editor
-  );
-  const { file, originalContent } = useSelector(
-    (state: RootState) => state.document
-  );
+  const { translatedContent, from_lang } = useSelector((state: RootState) => state.editor);
+  const { file, originalContent } = useSelector((state: RootState) => state.document);
+  const selectedLang = useSelector((state: RootState) => state.editor.to_lang);
 
-  const handleTranslate = () => {
-    dispatch(setIsTranslating(true));
-    // Simulate translation
-    setTimeout(() => {
-      dispatch(setTranslatedContent(originalContent));
-      dispatch(setIsTranslating(false));
-    }, 2000);
+  const to_lang = getLanguageName(selectedLang);
+
+  const detectLanguage = useCallback((content: string) => {
+    const lngDetector = new LanguageDetect();
+    const detected = lngDetector.detect(content);
+
+    if (detected && detected.length > 0) {
+      const detectedLang = mapLanguageToCode(detected[0][0]);
+      dispatch(setFromLang(detectedLang));
+    } else {
+      dispatch(setFromLang('en'));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (originalContent) {
+      detectLanguage(originalContent);
+    }
+  }, [originalContent, detectLanguage]);
+
+  const mapLanguageToCode = (language: string): string => {
+    const lang = getLanguageCode(language);
+    return lang || 'en';
   };
 
+  const handleTranslate = async () => {
+    if (!originalContent) {
+      return;
+    }
+
+    dispatch(setIsTranslating(true));
+
+    try {
+
+      const markdownContent = htmlToMarkdown(originalContent)
+      if (!markdownContent) {
+        throw new Error('Markdown content is missing from the translation request.');
+      }
+
+      const response = await translateContent({
+        from_lang: from_lang,
+        to_lang: to_lang,
+        content: markdownContent,
+      });
+      if (response.translatedContent) {
+        dispatch(setTranslatedContent(response.translatedContent));
+      }
+    } catch (error) {
+      if (error instanceof ApiError) {
+        throw new ApiError(error.message, error.status);
+      }
+      throw new ApiError(`Translation error`, 500);
+    } finally {
+      dispatch(setIsTranslating(false));
+    }
+  };
+
+  const handleEditorChange = useCallback((content: string) => {
+    dispatch(setTranslatedContent(content));
+  }, [dispatch]);
+
   return (
-    <div className="container py-8 px-2 ">
+    <div className="container py-8 px-2">
       <div className="space-y-6">
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
@@ -59,7 +119,7 @@ export function TranslatePage() {
             <CardContent>
               <Editor
                 content={translatedContent}
-                onChange={(content) => dispatch(setTranslatedContent(content))}
+                onChange={handleEditorChange}
               />
             </CardContent>
           </Card>

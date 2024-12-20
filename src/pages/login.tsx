@@ -63,7 +63,6 @@ export function LoginPage() {
       });
     } catch (err) {
       const error = err as SerializedError;
-      console.log(error.message);
       setErrors({ 
         username: '', 
         password: error.message || 'An unexpected error occurred. Please try again.' 

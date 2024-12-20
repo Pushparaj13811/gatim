@@ -7,7 +7,7 @@ export interface DocumentState {
   documentStyles: string;
   isLoading: boolean;
   error: string | null;
-  format: 'pdf' | 'docx' | 'txt' | 'html' | null;
+  format:'docx' | 'txt' |null;
 }
 
 const initialState: DocumentState = {

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Languages, X, Loader2 } from 'lucide-react';
-import { PDFViewer } from './viewers/PDFViewer';
 import { DocxViewer } from './viewers/DocxViewer';
 import { TextViewer } from './viewers/TextViewer';
 import { extractDocxContent } from '@/lib/document';
@@ -46,15 +45,12 @@ export function DocumentPreview({ onTranslate }: DocumentPreviewProps) {
       try {
         const arrayBuffer = await file.arrayBuffer();
 
-        if (format === 'pdf') {
-          dispatch(setPreview(arrayBuffer));
-          dispatch(setOriginalContent(''));
-        } else if (format === 'docx') {
+        if (format === 'docx') {
           const { content, styles } = await extractDocxContent(arrayBuffer);
           dispatch(setPreview(content));
           dispatch(setOriginalContent(content));
           dispatch(setDocumentStyles(styles));
-        } else if (format === 'txt' || format === 'html') {
+        } else if (format === 'txt') {
           const text = await file.text();
           dispatch(setPreview(text));
           dispatch(setOriginalContent(text));
@@ -97,12 +93,9 @@ export function DocumentPreview({ onTranslate }: DocumentPreviewProps) {
     }
 
     switch (format) {
-      case 'pdf':
-        return <PDFViewer file={preview as ArrayBuffer} />;
       case 'docx':
         return <DocxViewer content={preview as string} originalStyles={documentStyles} />;
       case 'txt':
-      case 'html':
         return <TextViewer content={preview as string} />;
       default:
         return null;
