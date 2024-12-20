@@ -73,10 +73,8 @@ export const handleLogin = async (
         });
     } catch (err: unknown) {
         const error = err as SerializedError;
-        console.log(error.message);
         // Check for unauthorized error
         if (error.message === 'Invalid login details.') {
-            console.log(error.message);
             toast({
                 title: 'Invalid Credentials',
                 description: 'The username or password you entered is incorrect.',
