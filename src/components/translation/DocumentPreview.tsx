@@ -157,3 +157,5 @@ export function DocumentPreview({ onTranslate }: DocumentPreviewProps) {
     </div>
   );
 }
+
+export default DocumentPreview;

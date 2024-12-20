@@ -81,3 +81,5 @@ export function FileUpload() {
     </ToastProvider>
   );
 }
+
+export default FileUpload;

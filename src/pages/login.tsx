@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '@/lib/store';
@@ -7,12 +7,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
 import { validateField, ValidationErrors, loginSchema } from '@/services/authService';
 import { loginUser } from '@/features/auth/authSlice';
 import { toast } from '@/hooks/use-toast';
 import { SerializedError } from '@reduxjs/toolkit';
+
+// Lazy load Header and Footer components
+const Header = lazy(() => import('@/components/layout/header'));
+const Footer = lazy(() => import('@/components/layout/footer'));
 
 export function LoginPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -79,7 +81,9 @@ export function LoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Header />
+      </Suspense>
       <main className="flex-1 flex items-center justify-center p-4 bg-gradient-to-b from-background via-primary/5 to-background">
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-4">
@@ -138,7 +142,11 @@ export function LoginPage() {
           </CardContent>
         </Card>
       </main>
-      <Footer />
+      <Suspense fallback={<div>Loading Footer...</div>}>
+        <Footer />
+      </Suspense>
     </div>
   );
 }
+
+export default LoginPage;

@@ -238,3 +238,5 @@ export function Editor({ content, onChange }: EditorProps) {
     </div>
   );
 }
+
+export default Editor;
