@@ -31,7 +31,7 @@ export function Header() {
           {/* User Greeting */}
           {user && (
             <span className="hidden sm:inline text-xs sm:text-sm text-muted-foreground">
-              Welcome, {user.name}
+              Welcome, {user.username}
             </span>
           )}
 
