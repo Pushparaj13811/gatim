@@ -4,7 +4,6 @@ export async function extractDocxContent(arrayBuffer: ArrayBuffer) {
   const result = await mammoth.convertToHtml(
     { arrayBuffer },
     {
-      preserveStyles: true,
       styleMap: [
         "p[style-name='Normal'] => p.normal",
         "p[style-name='Heading 1'] => h1.heading1",
