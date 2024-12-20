@@ -64,8 +64,10 @@ export function TranslatePage() {
         dispatch(setTranslatedContent(response.translatedContent));
       }
     } catch (error) {
-      console.error('Translation Error:', error);
-      throw new ApiError("Translation error ", 500);
+      if (error instanceof ApiError) {
+        throw new ApiError(error.message, error.status);
+      }
+      throw new ApiError(`Translation error`, 500);
     } finally {
       dispatch(setIsTranslating(false));
     }
