@@ -96,3 +96,6 @@ export function Header() {
     </header>
   );
 }
+
+
+export default Header;
