@@ -3,6 +3,7 @@ node_modules/
 
 # TypeScript build files
 *.tsbuildinfo
+tsconfig.app.tsbuildinfo
 
 # Vite build directory
 dist/
@@ -19,3 +20,4 @@ dist/
 
 # MacOS specific
 .DS_Store
+
