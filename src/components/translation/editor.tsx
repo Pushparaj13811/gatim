@@ -92,7 +92,6 @@ export function Editor({ content, onChange }: EditorProps) {
   const handleDownload = async () => {
     if (!editor) return;
     const htmlContent = editor.getHTML();
-    console.log(htmlContent);
     if (!htmlContent || htmlContent === "<p></p>" )
     { 
       toast({
