@@ -16,65 +16,56 @@ export interface TranslationResult {
 }
 
 // Function to split content into chunks of a specific length
-const splitContentIntoChunks = (content: string, chunkSize: number): string[] => {
-  const chunks = [];
-  let start = 0;
+// const splitContentIntoChunks = (content: string, chunkSize: number): string[] => {
+//   const chunks = [];
+//   let start = 0;
   
-  while (start < content.length) {
-    chunks.push(content.slice(start, start + chunkSize));
-    start += chunkSize;
-  }
+//   while (start < content.length) {
+//     chunks.push(content.slice(start, start + chunkSize));
+//     start += chunkSize;
+//   }
 
-  return chunks;
-};
+//   return chunks;
+// };
 
 export const translateContent = async (params: TranslationParams): Promise<TranslationResult> => {
-  const chunkSize = 2000; // Define the chunk size based on your API's limit
-  const chunks = splitContentIntoChunks(params.content, chunkSize);
+  // const chunkSize = 2000; // Define the chunk size based on your API's limit
+  const chunks = params.content
 
   try {
-    const translatedChunks: string[] = [];
+    // const translatedChunks: string[] = [];
 
-    // Translate each chunk sequentially
-    for (const chunk of chunks) {
-      const response = await api.translateContent({
-        from_lang: params.from_lang,
-        to_lang: params.to_lang,
-        content: chunk,
-      });
+    console.log(chunks)
+    console.log(chunks.length)
 
-      // Process each chunk's translation
-      const resultContent = await markdownToHtml(response.data.translated_content);
-      translatedChunks.push(resultContent);
-    }
+    // // Translate each chunk sequentially
+    // for (const chunk of chunks) {
+    //   const response = await api.translateContent({
+    //     from_lang: params.from_lang,
+    //     to_lang: params.to_lang,
+    //     content: chunks,
+    //   });
 
-    // Merge all translated chunks sequentially
-    const mergedContent = translatedChunks.join('');
+    //   // Process each chunk's translation
+    //   const resultContent = await markdownToHtml(response.data.translated_content);
+    //   translatedChunks.push(resultContent);
+    // }
 
-    return {
-      translatedContent: mergedContent,
+    // // Merge all translated chunks sequentially
+    // const mergedContent = translatedChunks.join('');
+
+    const response = await api.translateContent({
       from_lang: params.from_lang,
       to_lang: params.to_lang,
-    };
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw new Error(error.message);
-    }
-    throw new Error('Translation failed. Please try again.');
-  }
-};
-
-export const translateDocument = async (params: TranslationParams): Promise<TranslationResult> => {
-  try {
-    const response = await api.translateDocument({
-      from_lang: params.from_lang,
-      to_lang: params.to_lang,
-      content: params.content,
+      content: chunks,
     });
+
+    const resultContent = await markdownToHtml(response.data.translated_content);
+
     return {
-      translatedContent: response.data.translated_content,
-      from_lang: response.data.from_language,
-      to_lang: response.data.to_language,
+      translatedContent: resultContent,
+      from_lang: params.from_lang,
+      to_lang: params.to_lang,
     };
   } catch (error) {
     if (error instanceof ApiError) {
@@ -83,3 +74,23 @@ export const translateDocument = async (params: TranslationParams): Promise<Tran
     throw new Error('Translation failed. Please try again.');
   }
 };
+
+// export const translateDocument = async (params: TranslationParams): Promise<TranslationResult> => {
+//   try {
+//     const response = await api.translateDocument({
+//       from_lang: params.from_lang,
+//       to_lang: params.to_lang,
+//       content: params.content,
+//     });
+//     return {
+//       translatedContent: response.data.translated_content,
+//       from_lang: response.data.from_language,
+//       to_lang: response.data.to_language,
+//     };
+//   } catch (error) {
+//     if (error instanceof ApiError) {
+//       throw new Error(error.message);
+//     }
+//     throw new Error('Translation failed. Please try again.');
+//   }
+// };

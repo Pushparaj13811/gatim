@@ -166,27 +166,27 @@ export const api = {
     }
   },
 
-  // translateDocument: async (params: TranslationInput): Promise<ApiResponse<TranslationResponse>> => {
-  //   try {
-  //     const response = await fetchWithAuth(`${API_BASE_URL}/api/translate_content/`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Accept': 'application/json',
-  //       },
-  //       credentials: 'include',
-  //       body: JSON.stringify(params),
-  //     });
+  translateDocument: async (params: TranslationInput): Promise<ApiResponse<TranslationResponse>> => {
+    try {
+      const response = await fetchWithAuth(`${API_BASE_URL}/api/translate_content/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(params),
+      });
 
-  //     const data = await handleResponse<TranslationResponse>(response);
-  //     return { data };
-  //   } catch (error) {
-  //     if (error instanceof ApiError && error.status === 401) {
-  //       throw new ApiError('Session expired. Please login again.');
-  //     }
-  //     throw error;
-  //   }
-  // },
+      const data = await handleResponse<TranslationResponse>(response);
+      return { data };
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 401) {
+        throw new ApiError('Session expired. Please login again.');
+      }
+      throw error;
+    }
+  },
 
   translateContent: async (params: TranslationInput): Promise<ApiResponse<TranslationResponse>> => {
     const formData = new FormData();
