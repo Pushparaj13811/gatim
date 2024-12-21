@@ -1,8 +1,22 @@
+import { useTheme } from '@/components/theme-provider';
 import { Card } from '@/components/ui/card';
 import { Languages, FileText, Wand2, Bot } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function HomePage() {
+
+  const { theme } = useTheme();
+
+  const themeImages: { [key: string]: string } = {
+    neone: 'https://illustrations.popsy.co/blue/business-analysis.svg',
+    'light-bliss': 'https://illustrations.popsy.co/blue/business-analysis.svg',
+    'retro-warm': 'https://illustrations.popsy.co/amber/business-analysis.svg',
+    'gradient-luxe': 'https://illustrations.popsy.co/violet/business-analysis.svg',
+  };
+
+  const heroImage = themeImages[theme] || themeImages.neone;
+
+
   return (
     <div className="container py-12">
       <div className="space-y-12">
@@ -110,7 +124,9 @@ export function HomePage() {
         <div className="relative h-60 overflow-hidden rounded-xl bg-gradient-to-r from-primary/5 to-accent/5">
           <div className="absolute inset-0 flex items-center justify-center">
             <img
-              src="https://illustrations.popsy.co/white/solution-mindset.svg"
+              src={heroImage}
+              // src="https://illustrations.popsy.co/amber/business-analysis.svg"
+
               alt="Process illustration"
               className="w-full h-full object-contain"
             />
