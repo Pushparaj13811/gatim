@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Monitor, LogOut, Palette } from 'lucide-react';
+import { LogOut, Palette } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/components/theme-provider';
 import { logout } from '@/features/auth/authSlice';
@@ -12,7 +12,7 @@ export function Header() {
   const { theme, setTheme } = useTheme();
   const user = useSelector((state: RootState) => state.auth.user);
 
-  const themes = ['neon','light-bliss', 'retro-warm', 'gradient-luxe'];
+  const themes = ['neon', 'light-bliss', 'retro-warm', 'gradient-luxe'];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -20,11 +20,15 @@ export function Header() {
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center space-x-2 bg-primary text-primary-foreground px-3 py-2 rounded-lg transition-colors hover:bg-primary/90"
+          className="flex items-center space-x-2 text-primary-foreground px-3 py-2 rounded-lg transition-colors hover:bg-primary/90"
         >
-          <Monitor className="h-5 w-5" />
-          <span className="font-bold text-sm sm:text-base">Gati Desk</span>
+          <img
+            src="./logo.png"
+            alt="gati-desk-logo"
+            className="h-12 w-auto"
+          />
         </Link>
+
 
         {/* Navigation and Actions */}
         <div className="flex flex-1 items-center justify-end space-x-2 sm:space-x-4">
@@ -62,11 +66,10 @@ export function Header() {
                       onSelect={() => setTheme(availableTheme as typeof theme)}
                       className={`cursor-pointer rounded-md px-3 py-2 text-sm 
                                   transition-colors focus:outline-none 
-                                  ${
-                                    theme === availableTheme
-                                      ? 'bg-primary text-primary-foreground'
-                                      : 'hover:bg-gray-100 dark:hover:bg-gray-700'
-                                  }`}
+                                  ${theme === availableTheme
+                          ? 'bg-primary text-primary-foreground'
+                          : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                        }`}
                     >
                       {availableTheme.charAt(0).toUpperCase() +
                         availableTheme.slice(1)}{' '}
