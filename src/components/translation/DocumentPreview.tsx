@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import { setToLang } from '@/features/editor/editorSlice';
+import { SUPPORTED_LANGUAGES as languages } from '@/lib/language';
 
 interface DocumentPreviewProps {
   onTranslate: () => void;
@@ -141,16 +142,25 @@ export function DocumentPreview({ onTranslate }: DocumentPreviewProps) {
           <DropdownMenuTrigger asChild>
             <Button variant="outline" disabled={isTranslating}>
               {selectedLang
-                ? `Selected Language: ${selectedLang.toUpperCase()}`
+                ? `Translate to: ${selectedLang.toUpperCase()}`
                 : 'Select Target Language'}
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem onSelect={() => handleLanguageSelect('en')}>English</DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => handleLanguageSelect('hi')}>Hindi</DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => handleLanguageSelect('ne')}>Nepali</DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => handleLanguageSelect('gu')}>Gujarati</DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => handleLanguageSelect('bho')}>Bhojpuri</DropdownMenuItem>
+          <DropdownMenuContent
+            className="max-h-24 overflow-y-auto bg-background shadow-md rounded-md p-2 scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted"
+            side="bottom"
+            align="center"
+            sideOffset={4}
+          >
+            {languages.map(({ code, name }) => (
+              <DropdownMenuItem
+                key={code}
+                onSelect={() => handleLanguageSelect(code)}
+                className="cursor-pointer hover:bg-primary rounded-md px-2 py-1"
+              >
+                {name}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
