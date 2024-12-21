@@ -1,8 +1,31 @@
+import { useTheme } from '@/components/theme-provider';
 import { Card } from '@/components/ui/card';
+import { toast } from "@/hooks/use-toast";
 import { Languages, FileText, Wand2, Bot } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function HomePage() {
+
+  const { theme } = useTheme();
+
+  const themeImages: { [key: string]: string } = {
+    neone: 'https://illustrations.popsy.co/blue/business-analysis.svg',
+    'light-bliss': 'https://illustrations.popsy.co/blue/business-analysis.svg',
+    'retro-warm': 'https://illustrations.popsy.co/amber/business-analysis.svg',
+    'gradient-luxe': 'https://illustrations.popsy.co/violet/business-analysis.svg',
+  };
+
+  const heroImage = themeImages[theme] || themeImages.neone;
+
+  const showComingSoonToast = () => {
+    toast({
+      title: 'Coming Soon',
+      description: 'This feature is under development',
+    });
+  }
+
+
+
   return (
     <div className="container py-12">
       <div className="space-y-12">
@@ -43,7 +66,9 @@ export function HomePage() {
             </Card>
           </Link>
 
-          <Card className="group relative overflow-hidden rounded-xl border p-6 hover:border-primary/50 hover:shadow-md transition-all">
+          <Card className="group relative overflow-hidden rounded-xl border p-6 hover:border-primary/50 hover:shadow-md transition-all"
+            onClick={showComingSoonToast}
+          >
             <div className="flex items-center gap-4">
               <div className="rounded-lg bg-accent/10 p-3 group-hover:bg-accent/20 transition-colors">
                 <FileText className="h-6 w-6 text-accent" />
@@ -58,7 +83,9 @@ export function HomePage() {
             <span className="absolute inset-0 rounded-xl ring-1 ring-inset ring-accent/10 group-hover:ring-accent/30 transition-all" />
           </Card>
 
-          <Card className="group relative overflow-hidden rounded-xl border p-6 hover:border-primary/50 hover:shadow-md transition-all">
+          <Card className="group relative overflow-hidden rounded-xl border p-6 hover:border-primary/50 hover:shadow-md transition-all"
+            onClick={showComingSoonToast}
+          >
             <div className="flex items-center gap-4">
               <div className="rounded-lg bg-secondary/10 p-3 group-hover:bg-secondary/20 transition-colors">
                 <Bot className="h-6 w-6 text-secondary" />
@@ -110,7 +137,7 @@ export function HomePage() {
         <div className="relative h-60 overflow-hidden rounded-xl bg-gradient-to-r from-primary/5 to-accent/5">
           <div className="absolute inset-0 flex items-center justify-center">
             <img
-              src="https://illustrations.popsy.co/white/solution-mindset.svg"
+              src={heroImage}
               alt="Process illustration"
               className="w-full h-full object-contain"
             />
