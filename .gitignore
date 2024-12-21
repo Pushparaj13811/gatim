@@ -1,23 +1,28 @@
-# Node.js
+# Node.js dependencies
 node_modules/
 
-# TypeScript build files
-*.tsbuildinfo
-tsconfig.app.tsbuildinfo
-
-# Vite build directory
+# Build output
 dist/
+build/
+*.txt 
+
+# TypeScript build info
+*.tsbuildinfo
 
 # Logs
-*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Environment files
+# Environment variables
 .env
+.env.local
+.env.*.local
 
-# IDE-specific files
-.vscode/
-.idea/
-
-# MacOS specific
+# OS-specific files
 .DS_Store
 
+# IDE settings
+.vscode/
+.idea/
+*.iml
