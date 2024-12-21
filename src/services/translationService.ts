@@ -27,6 +27,7 @@ const splitContentIntoChunks = (content: string, chunkSize: number): string[] =>
 
   return chunks;
 };
+
 export const translateContent = async (params: TranslationParams): Promise<TranslationResult> => {
   const chunkSize = 2000; // Define the chunk size based on your API's limit
   const chunks = splitContentIntoChunks(params.content, chunkSize);
@@ -34,7 +35,7 @@ export const translateContent = async (params: TranslationParams): Promise<Trans
   try {
     const translatedChunks: string[] = [];
 
-    // Translate each chunk separately
+    // Translate each chunk sequentially
     for (const chunk of chunks) {
       const response = await api.translateContent({
         from_lang: params.from_lang,
@@ -47,7 +48,7 @@ export const translateContent = async (params: TranslationParams): Promise<Trans
       translatedChunks.push(resultContent);
     }
 
-    // Merge all translated chunks
+    // Merge all translated chunks sequentially
     const mergedContent = translatedChunks.join('');
 
     return {

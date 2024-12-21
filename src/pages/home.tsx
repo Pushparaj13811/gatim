@@ -11,7 +11,7 @@ export function HomePage() {
   const themeImages: { [key: string]: string } = {
     neone: 'https://illustrations.popsy.co/blue/business-analysis.svg',
     'light-bliss': 'https://illustrations.popsy.co/blue/business-analysis.svg',
-    'retro-warm': 'https://illustrations.popsy.co/amber/business-analysis.svg',
+    'retro-warm': 'https://illustrations.popsy.co/orange/business-analysis.svg',
     'gradient-luxe': 'https://illustrations.popsy.co/violet/business-analysis.svg',
   };
 
@@ -23,8 +23,6 @@ export function HomePage() {
       description: 'This feature is under development',
     });
   }
-
-
 
   return (
     <div className="container py-12">

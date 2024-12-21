@@ -472,3 +472,17 @@
 .ProseMirror:focus {
   outline: none !important;
 }
+
+/* Add this in your global CSS file */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+.scrollbar-track {
+  background-color: #f1f1f1;
+}
+.scrollbar-thumb {
+  background-color: #888;
+}
+.scrollbar-thumb:hover {
+  background-color: #555;
+}
