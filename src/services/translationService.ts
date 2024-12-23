@@ -35,9 +35,6 @@ export const translateContent = async (params: TranslationParams): Promise<Trans
   try {
     // const translatedChunks: string[] = [];
 
-    console.log(chunks)
-    console.log(chunks.length)
-
     // // Translate each chunk sequentially
     // for (const chunk of chunks) {
     //   const response = await api.translateContent({
