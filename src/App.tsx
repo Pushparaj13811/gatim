@@ -21,13 +21,7 @@ function App() {
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route
-          element={
-            <ProtectedRoute>
-              <RootLayout />
-            </ProtectedRoute>
-          }
-        >
+        <Route element={<ProtectedRoute><RootLayout /></ProtectedRoute>}>
           <Route path="/" element={<HomePage />} />
           <Route path="/translate" element={<TranslatePage />} />
         </Route>

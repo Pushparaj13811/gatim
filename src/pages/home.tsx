@@ -35,12 +35,13 @@ export function HomePage() {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Transform your documents with AI-powered translation and processing tools
           </p>
-          <div className="relative w-full max-w-lg mx-auto h-40">
+          <div className="relative w-full max-w-lg mx-auto h-60">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 blur-3xl rounded-full"></div>
             <img
-              src="https://illustrations.popsy.co/white/graphic-design.svg"
+              // src="https://illustrations.popsy.co/white/graphic-design.svg"
+              src='https://gatiai.com/images/04_v8.svg'
               alt="Hero illustration"
-              className="relative w-full h-full object-contain"
+              className="relative w-full h-full object-contain "
             />
           </div>
         </div>

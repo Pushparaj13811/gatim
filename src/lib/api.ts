@@ -1,7 +1,7 @@
 import { ApiError } from "./errors";
 import { LoginInput, TranslationInput } from "./validation";
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = '';
 
 // Constants for storage keys
 const ACCESS_TOKEN_KEY = 'access_token';
