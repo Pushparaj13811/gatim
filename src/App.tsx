@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { RootLayout } from '@/components/layout/root-layout';
 import { RootState } from '@/lib/store';
+import Skeleton from 'react-loading-skeleton';
 
 // Lazy loading components
 const LoginPage = React.lazy(() => import('@/pages/login'));
@@ -18,7 +19,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Skeleton count={5} />}>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route element={<ProtectedRoute><RootLayout /></ProtectedRoute>}>
