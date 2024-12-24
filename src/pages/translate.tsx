@@ -14,9 +14,14 @@ import { useCallback } from 'react';
 import { ApiError } from '@/lib/errors';
 import { htmlToMarkdown } from '@/utils/markdownConverter';
 
-const Editor = React.lazy(() => import('@/components/translation/editor'));
-const FileUpload = React.lazy(() => import('@/components/translation/file-upload'));
-const DocumentPreview = React.lazy(() => import('@/components/translation/DocumentPreview'));
+// const Editor = React.lazy(() => import('@/components/translation/editor'));
+// const FileUpload = React.lazy(() => import('@/components/translation/file-upload'));
+// const DocumentPreview = React.lazy(() => import('@/components/translation/DocumentPreview'));
+
+// Import components directly without lazy loading
+import Editor from '@/components/translation/editor';
+import FileUpload from '@/components/translation/file-upload';
+import DocumentPreview from '@/components/translation/DocumentPreview';
 
 
 export function TranslatePage() {
