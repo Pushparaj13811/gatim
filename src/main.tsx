@@ -13,7 +13,7 @@ createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <ThemeProvider defaultTheme="system" storageKey="gati-desk-theme">
+          <ThemeProvider defaultTheme="gradient-luxe" storageKey="gati-desk-theme">
             <App />
           </ThemeProvider>
         </BrowserRouter>
